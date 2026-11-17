@@ -1,0 +1,31 @@
+REMark
+REMark Sample BOOT file for use with ELVIS
+REMark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+:
+REMark  You do not HAVE to use a BOOT file to run ELVIS.  There are,
+REMark  however, options you can set in a BOOT file to tailor ELVIS
+REMark  to your system.   This file (while useable as it stands)
+REMark  is merely a model.  You will probably want to modify it to
+REMark  suit your own system and preferences
+REMark
+REMark  Probably more useful is to add relevant entries to your normal
+REMark  BOOT file.   You will then be able to EXEC ELVIS at any time.
+:
+MODE 4   :                        REMark set monitor mode (4 colour)
+TK2_EXT  :                        REMark activate Toolkit 2
+PROG_USE "Flp1_" :                REMark  Set directory for program files
+DATA_USE "Flp2_" :                REMark  Set directory for data files
+:
+LRESPR  PROGD$ & "env_bin" :      REMark  Load C68 environment variable support
+:
+REMark   Environment variables  - set these to suit your own style of working
+:
+SETENV "TERM=qdos" :              REMark Terminal type in TERMINFO file
+SETENV "TERMINFO=flp1_terminfo" : REMark Path for finding TERMINFO_QDOS file
+SETENV "TEMP=ram1_" :             REMark  temporary directory
+SETENV "TMP=ram1_" :              REMark  (alternative for some programs)
+:
+EXEC "Elvis" :                    REMark  ...finally load Elvis program
+:
+PRINT #0,"Type CTRL-C to switch to and from ELVIS."
+PRINT #0,"CTRL-L refreshes the screen when in ELVIS."

@@ -1,0 +1,25 @@
+ELVIS 1.6 original redistribution and reuse statements
+=====================================================
+
+Copyright: Steve Kirkendall (as stated by the author below).
+
+Source: the supplied docs/original/Elvis.doc, FAQ items 8 and 9.
+Quill NUL paragraph separators were converted to newlines. Original text
+and author attribution are retained; this is not a replacement license.
+
+8) Is this shareware, or publicdomain,or what?
+
+	It is not public domain; it  is copyrighted  by me, Steve  Kirkendall.   However, this particular version is freely redistributable, in either source  form  or executable  form.   (I  would  prefer  that  you give copies away for free, complete with the full  source code... but I'm not going to force you.)
+
+	It is not shareware; you aren't expected to  send  me anything.  You can use it without guilt.
+
+	It is not "copylefted." I  hold  a  copyright, but currently  I have not added any of the usual restrictions that you would find on copylefted software.  If people  start doing really obnoxious things to Elvis, then I will start adding restrictions  to  subsequent versions,  but  earlier versions  won't be affected. (So far, everybody has been pretty good about this so no restrictions have been necessary.)
+
+
+9) Can I reuse parts ofyour source code?
+
+	Yes.  Please be careful, though, to  make  surethat the  code  really is mine.  Some of the code was contributedby  other  people,  and I  don't  have the authority  to  give  you permission  to use it. The author's name can be  found  near  the  top  of each source  file.  If it says "Steve Kirkendall" then you may use it;  otherwise, you'd better contact the author first.
+
+	Please don't remove my name fromthe source code.  If you  modify  the source,  please make a note of that fact in a comment near the top of  the  source  code.
+
+	And, finally, please mention my name in your documentation.

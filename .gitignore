@@ -1,0 +1,12 @@
+# Generated QDOS executables, objects, packages and diagnostic snapshots.
+/build/
+# Supplied historical binaries are preserved locally, not part of a source push.
+/legacy/bin/
+__pycache__/
+*.py[cod]
+.DS_Store
+core
+core.*
+*.swp
+*.swo
+*~
