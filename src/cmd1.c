@@ -1098,6 +1098,7 @@ void cmd_version(frommark, tomark, cmd, bang, extra)
 	char	*extra;
 {
 	msg("%s", VERSION);
+	msg("%s", QLVI_CREDIT);
 #ifdef CREDIT
 	msg("%s", CREDIT);
 #endif

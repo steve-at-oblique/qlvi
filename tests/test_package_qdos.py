@@ -25,7 +25,10 @@ class PackageTests(unittest.TestCase):
         self.assertNotIn(b'SIGNAL extension not loaded', raw)
         version = (ROOT / 'VERSION').read_text().strip()
         self.assertEqual((ROOT / 'build/dist/VERSION').read_text().strip(), version)
-        self.assertIn(('qlvi ' + version + ' (ELVIS 1.6, by Steve Kirkendall)').encode(), raw)
+        self.assertTrue(('QLVI by Steve Jennen, version ' + version).encode() in raw,
+                        'packaged editor must contain the current version banner')
+        self.assertTrue(b'Based on ELVIS 1.6 by Steve Kirkendall; original QDOS port by Dave Walker' in raw,
+                        'packaged editor must retain upstream credits')
 
     def test_rejects_data_files_and_double_wrapping(self):
         with self.assertRaises(ValueError):

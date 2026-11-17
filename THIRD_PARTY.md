@@ -76,6 +76,9 @@ Supplied historical executables and `env.bin` remain in `legacy/bin/` for
 reference and are ignored by Git by default. Generated objects, extracted
 library objects, current executables, and packages under `build/` are also
 ignored. Neither collection is automatically included in a source push.
+The maintained bin/ directory contains copies of the current packaged editor
+and launcher for users downloading the repository; its VERSION tracks the
+source used to build them. The library-terms qualification above still applies.
 
 ## GitHub publication
 

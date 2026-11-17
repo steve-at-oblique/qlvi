@@ -11,7 +11,8 @@
  */
 
 #include "qlvi_version.h"
-#define VERSION "qlvi " QLVI_VERSION " (ELVIS 1.6, by Steve Kirkendall)"
+#define VERSION "QLVI by Steve Jennen, version " QLVI_VERSION
+#define QLVI_CREDIT "Based on ELVIS 1.6 by Steve Kirkendall; original QDOS port by Dave Walker"
 #define COPYING	"This version of ELVIS is freely redistributable."
 
 #include <errno.h>

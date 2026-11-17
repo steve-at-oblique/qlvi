@@ -2,6 +2,15 @@
 
 qlvi versions track this QDOS port independently of upstream ELVIS 1.6.
 
+## 0.2.1 — 2026-11-17
+
+- Lead :version with Steve Jennen's name and retain ELVIS and QDOS port credits.
+- Include ready-to-copy executables and installation instructions in bin/.
+- User reports 0.2.0 editing passes on QIMSI Gold with SMSQ/E 3.43 in Normal
+  and Large Mode 4, Aurora 8-bit colour, and Small, Medium, and Large 16-bit
+  colour. Window placement varied across reboots; a cold start restored
+  centering in Large Mode 4. Minerva remains untested.
+
 ## 0.2.0 — 2026-11-17
 
 Second local commit; adds temporary-storage selection and explicit version tracking.

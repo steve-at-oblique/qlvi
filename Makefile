@@ -18,7 +18,7 @@ SOURCES = $(wildcard src/*.c)
 HEADERS = $(wildcard include/*.h)
 VERSION_HEADER = $(BUILD)/qlvi_version.h
 
-.PHONY: all package test test-launcher version bump-version
+.PHONY: all package bin test test-launcher version bump-version
 all: $(addprefix $(BUILD)/,$(PROGRAMS))
 
 version:
@@ -74,6 +74,11 @@ $(BUILD)/ctags: src/ctype.c
 # A stable executable name for the resident launcher. The SNL daemon strips
 # this Q-emulator wrapper and exposes its metadata as a native QDOS header.
 package: $(DIST)/elvis $(DIST)/vi_rext $(DIST)/VERSION
+
+# Refresh the checked-in user downloads after building a new version.
+bin: package
+	mkdir -p bin
+	cp $(DIST)/elvis $(DIST)/vi_rext $(DIST)/VERSION bin/
 
 $(DIST):
 	mkdir -p $@

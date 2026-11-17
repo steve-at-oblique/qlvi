@@ -7,6 +7,14 @@ built in: no TERM/TERMINFO setup or external terminfo file is required.
 Working storage defaults to RAM1_; if it is unavailable, qlvi prompts for
 a writable alternative such as WIN1_ or SNL1_.
 
+## Ready-built download
+
+Download the repository ZIP using GitHub's Code menu. The `bin/` directory
+contains ready-built `elvis` and `vi_rext`; no compiler is needed.
+See [bin/README.md](bin/README.md) for installation over SNL.
+
+## Building from source
+
 ```sh
 make -j4
 make package
