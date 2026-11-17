@@ -2,6 +2,12 @@
 
 qlvi versions track this QDOS port independently of upstream ELVIS 1.6.
 
+## 0.2.3 — 2026-11-17
+
+- Fit version messages to the measured console width, reserving room for
+  message padding and [More...] rather than assuming an 80-column window.
+- Exercise the actual message splitter with host tests at 30–132 columns.
+
 ## 0.2.2 — 2026-11-17
 
 - Split version credits into shorter lines to leave room for the message

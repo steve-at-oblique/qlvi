@@ -29,6 +29,7 @@ bump-version:
 
 test: package
 	python3 tests/test_version.py
+	python3 tests/test_version_messages.py
 	python3 tests/test_commandline.py
 	python3 tests/test_builtin_terminal.py
 	python3 tests/test_temp_storage.py

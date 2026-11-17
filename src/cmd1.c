@@ -1088,6 +1088,34 @@ void cmd_tag(frommark, tomark, cmd, bang, extra)
 
 
 
+/* Keep version messages within the console, including padding and [More...]. */
+static void version_message(text)
+	char *text;
+{
+	char line[80];
+	int width, length, split;
+
+	width = COLS - 12;
+	if (width < 1) width = 1;
+	if (width > sizeof line - 1) width = sizeof line - 1;
+	while (*text)
+	{
+		for (length = 0; text[length] && length < width; length++)
+			;
+		if (text[length])
+		{
+			for (split = length; split > 0 && text[split] != ' '; split--)
+				;
+			if (split > 0) length = split;
+		}
+		memcpy(line, text, length);
+		line[length] = '\0';
+		msg("%s", line);
+		text += length;
+		while (*text == ' ') text++;
+	}
+}
+
 /* describe this version of the program */
 /*ARGSUSED*/
 void cmd_version(frommark, tomark, cmd, bang, extra)
@@ -1097,20 +1125,20 @@ void cmd_version(frommark, tomark, cmd, bang, extra)
 	int	bang;
 	char	*extra;
 {
-	msg("%s", VERSION);
-	msg("%s", QLVI_CREDIT);
-	msg("%s", QLVI_QDOS_CREDIT);
+	version_message(VERSION);
+	version_message(QLVI_CREDIT);
+	version_message(QLVI_QDOS_CREDIT);
 #ifdef CREDIT
-	msg("%s", CREDIT);
+	version_message(CREDIT);
 #endif
 #ifdef CREDIT2
-	msg("%s", CREDIT2);
+	version_message(CREDIT2);
 #endif
 #ifdef COMPILED_BY
-	msg("Compiled by %s", COMPILED_BY);
+	version_message("Compiled by " COMPILED_BY);
 #endif
 #ifdef COPYING
-	msg("%s", COPYING);
+	version_message(COPYING);
 #endif
 	/* Version messages can scroll the command area. Repaint on return. */
 	redraw(MARK_UNSET, FALSE);
