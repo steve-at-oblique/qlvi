@@ -4,6 +4,8 @@ A working Sinclair QL port of Steve Kirkendall's ELVIS 1.6, updated by Steve
 Jennen from Dave Walker's original QDOS port. It supports editing files over
 SNL and provides a resident SuperBASIC `VI` command. Terminal definitions are
 built in: no TERM/TERMINFO setup or external terminfo file is required.
+Working storage defaults to RAM1_; if it is unavailable, qlvi prompts for
+a writable alternative such as WIN1_ or SNL1_.
 
 ```sh
 make -j4
@@ -59,6 +61,28 @@ make test-launcher
 Real QL testing has confirmed read/edit/save/reopen over SNL, command-line
 cursor editing, fast G/1G navigation, and the resident VI command with
 DATA_USE. New builds should still be checked on the target QL.
+
+## Version tracking
+
+qlvi's version is in [VERSION](VERSION), independently of upstream ELVIS 1.6.
+The build generates its C version header from that file; `:version` in the
+editor and `build/dist/VERSION` report the same qlvi version.
+
+Before each new local commit, bump the version and update [CHANGELOG.md](CHANGELOG.md):
+
+```sh
+make version
+make bump-version NEW_VERSION=0.3.0
+# Describe the changes in CHANGELOG.md, then:
+make test
+```
+
+`68ed7d0` is the **0.1.0** baseline; VERSION identifies the current build.
+New feature batches increment the minor version (0.1.0 -> 0.2.0), while bug
+fixes and maintenance increment the patch version (0.2.0 -> 0.2.1). Reserve
+`-rcN` for an explicitly planned release-candidate cycle. Versioning a commit
+does not assert hardware verification or publish a GitHub release; those are
+separate steps.
 
 ## License
 

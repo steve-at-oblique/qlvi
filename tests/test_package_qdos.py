@@ -23,6 +23,9 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(packaged[21], 1)
         self.assertEqual(packaged[22:26], raw[-4:])
         self.assertNotIn(b'SIGNAL extension not loaded', raw)
+        version = (ROOT / 'VERSION').read_text().strip()
+        self.assertEqual((ROOT / 'build/dist/VERSION').read_text().strip(), version)
+        self.assertIn(('qlvi ' + version + ' (ELVIS 1.6, by Steve Kirkendall)').encode(), raw)
 
     def test_rejects_data_files_and_double_wrapping(self):
         with self.assertRaises(ValueError):

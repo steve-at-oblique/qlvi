@@ -111,7 +111,8 @@
 #  define COMPILED_BY   "C68"
 # endif
 # define TINYSTACK      1
-# define TMPDIR         "ram1_elv_"
+# define TMPDIR         "ram1_"
+# define TMPNAME        "%selv_%x_%x"
 # define PRSVDIR        "ram1_elv_prsrv_"
 # define PRSVINDEX      "ram1_elv_prsrv_Index"
 # define MAILER

@@ -97,8 +97,10 @@ The editor can be updated independently after all running editor jobs exit.
   extension warning. Signal-based cleanup and suspension are not provided in
   this mode; define ELVIS_QDOS_SIGNALS when building for a system with working
   signal support. Ordinary editing, Escape, ZZ, and :q use no such extension.
-- Existing port defaults use RAM1 temporary files. Shell filtering via rpipe
-  was already unsupported. Legacy void-main compiler warnings remain.
+- Temporary storage defaults to RAM1_. Before the first edit buffer is opened,
+  qlvi probes that location. If it cannot be used, it prompts for another device
+  or prefix such as win1_ or snl1_. Shell filtering via rpipe was already
+  unsupported. Legacy void-main compiler warnings remain.
 
 Diagnostic build (logs startup, key bytes, and file operations to SNL4):
 
@@ -106,6 +108,35 @@ Diagnostic build (logs startup, key bytes, and file operations to SNL4):
 make BUILD=build/qdos-debug \
   CFLAGS='-O -DQDOS -DELVIS_STARTUP_TRACE' build/qdos-debug/elvis
 ```
+
+## Temporary storage
+
+qlvi uses temporary working files even for an empty edit buffer. By default it
+tries `ram1_`. It now checks temporary storage before opening the original
+file or creating the first edit buffer. The check creates a separate probe
+file exclusively, writes and reads four bytes with a seek, then closes and
+removes the probe. It never overwrites an existing probe file.
+
+If the location is missing, full, read-only or otherwise unusable, qlvi asks
+for a writable device/prefix. Type `win1_`, `snl1_`, or another suitable prefix
+and press Return. Leading/trailing spaces are trimmed, and a missing final
+underscore is added. Empty or invalid input and unusable choices are retried;
+Escape cancels startup before the original file is opened. The 30-byte
+existing directory option allows at most 29 characters, including the final
+underscore. No directories are created automatically.
+
+The selected prefix is remembered for the current editor session. It is not
+written to a configuration file automatically. Working filenames use a flat
+QDOS prefix, for example `snl1_elv_<job>_<sequence>`, so choosing a device does
+not require a pre-existing `elv_` subdirectory. Once a working location has
+been accepted it stays fixed, including when changing files, so cut buffers
+continue to refer to the correct working files. Losing that device or filling
+it later is still a file-I/O error, not an automatic migration to another disk.
+
+This startup selection and use of SNL for temporary files have automated
+coverage but still require real QL testing. The previously verified 80 KB file
+editing test used RAM1_ working storage. Minerva/other display modes remain
+untested on hardware. See [Minerva RAM-disk setup](minerva.md).
 
 ## Checks
 

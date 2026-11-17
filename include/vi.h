@@ -10,7 +10,8 @@
  *	kirkenda@cs.pdx.edu
  */
 
-#define VERSION "ELVIS 1.6, by Steve Kirkendall (27 April 1992)"
+#include "qlvi_version.h"
+#define VERSION "qlvi " QLVI_VERSION " (ELVIS 1.6, by Steve Kirkendall)"
 #define COPYING	"This version of ELVIS is freely redistributable."
 
 #include <errno.h>

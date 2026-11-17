@@ -16,6 +16,49 @@
 
 #include "config.h"
 #include "vi.h"
+#ifdef QDOS
+#include "qdos_temp.h"
+
+static int temp_prompted;
+
+static int prompt_temp_storage(message, answer, capacity)
+    const char *message;
+    char *answer;
+    unsigned capacity;
+{
+    temp_prompted = 1;
+    move(0, 0);
+    clrtoeol();
+    addstr(message);
+    if (LINES > 2)
+    {
+        move(1, 0);
+        clrtoeol();
+        addstr("win1_ or snl1_; Esc cancels.");
+    }
+    refresh();
+    return vgets('>', answer, (int)capacity) >= 0;
+}
+
+static int prepare_temp_storage()
+{
+    static int ready;
+    if (!ready)
+    {
+        if (!qdos_prepare_temp(o_directory, sizeof o_directory,
+                               prompt_temp_storage))
+            return 0;
+        ready = 1;
+        if (temp_prompted)
+        {
+            move(0, 0);
+            clrtobot();
+            refresh();
+        }
+    }
+    return 1;
+}
+#endif
 #if TOS
 # include <stat.h>
 #else
@@ -122,6 +165,15 @@ int tmpstart(filename)
 	int		i;
 	long		nbytes;
 	int             stat_result;
+
+#ifdef QDOS
+	/* Choose storage before opening the original or allocating its buffer. */
+	if (!prepare_temp_storage())
+	{
+		endwin();
+		exit(0);
+	}
+#endif
 
 	FILE_TRACE("tmpstart", filename, 0);
 

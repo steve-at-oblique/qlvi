@@ -27,8 +27,8 @@
 #include <qdos.h>
 /* Keep ELVIS's terminal bell, rather than qdos.h's hardware beep macro. */
 #undef beep
-char _prog_name[] = "elvis";
-char _version[] = "1.6";
+char _prog_name[] = "qlvi";
+char _version[] = QLVI_VERSION;
 int (*_cmdwildcard)(char *, char ***, int *) = cmdexpand;             /* expand wildcards */
 void (*_consetup)(chanid_t, WINDOWDEF_t *) = consetup_title;           /* Ask for menu bar */
 char *_endmsg = NULL;                           /* Suppress default end message */
@@ -87,7 +87,7 @@ void main(argc, argv)
 	char	*str;
 	char	*tag = (char *)0;
 
-	STARTUP_TRACE("ELVIS QDOS diagnostic build 10: entered main");
+	STARTUP_TRACE("qlvi " QLVI_VERSION ": entered main");
 
 	/* set mode to MODE_VI or MODE_EX depending on program name */
 	switch (argv[0][strlen(argv[0]) - 1])
