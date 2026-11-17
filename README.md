@@ -30,6 +30,10 @@ DATA_USE snl4_
 VI error_txt
 ```
 
+On Minerva without the Pointer Environment, press **Ctrl+C** after `VI error_txt`
+to select the editor's console if input remains with SuperBASIC. See the
+[Minerva notes](docs/minerva.md#selecting-the-editor-console).
+
 Load the resident extension once per boot. The packaged executable includes
 its QDOS metadata in a wrapper supported by SNL; no SEXEC conversion is needed.
 

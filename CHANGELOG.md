@@ -2,6 +2,14 @@
 
 qlvi versions track this QDOS port independently of upstream ELVIS 1.6.
 
+## 0.2.4 — 2026-11-17
+
+- Add the Minerva Ctrl+C console-selection step to the main installation
+  instructions and Minerva guide, alongside the existing binary instructions.
+- Update testing notes to acknowledge reported Minerva startup without the
+  Pointer Environment; broader Minerva verification remains pending.
+- Record the development rule to commit only upon the user's explicit request.
+
 ## 0.2.3 — 2026-11-17
 
 - Fit version messages to the measured console width, reserving room for

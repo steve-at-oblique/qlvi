@@ -1,8 +1,21 @@
 # Minerva and RAM-disk setup
 
-The hardware configuration tested so far is QIMSI Gold with SMSQ/E 3.43,
-Large 4 Color mode. Minerva, alternative display sizes, and the new temporary
-storage prompt still need tests on the user's QL.
+The user has tested editing on QIMSI Gold with SMSQ/E 3.43 in several display
+modes and has reported Minerva startup without the Pointer Environment.
+Broader Minerva testing and hardware testing of the temporary-storage prompt
+remain pending.
+
+## Selecting the editor console
+
+On Minerva without the Pointer Environment, after starting the editor with:
+
+```basic
+VI error_txt
+```
+
+press **Ctrl+C** to select the editor's console if keyboard input remains
+with SuperBASIC. This switches keyboard input between consoles; it does not
+quit qlvi. This extra step was required in the user's Minerva test.
 
 Minerva can use standalone QDOS device drivers; it does not need SMSQ/E's
 built-in RAM disk. The following external downloads are available from the

@@ -1,5 +1,7 @@
 # qlvi development
 
+- Leave changes uncommitted for the user's testing. Commit only when the
+  user explicitly requests it (for example, "commit please").
 - Keep upstream ELVIS 1.6 attribution and licensing intact. Jennen changes are
   BSD-2-Clause as scoped in LICENSE and THIRD_PARTY.md.
 - Before committing a new batch of qlvi changes, bump the root VERSION and
