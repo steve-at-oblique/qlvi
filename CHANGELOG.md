@@ -2,6 +2,14 @@
 
 qlvi versions track this QDOS port independently of upstream ELVIS 1.6.
 
+## 0.2.2 — 2026-11-17
+
+- Split version credits into shorter lines to leave room for the message
+  continuation prompt in the standard 80-column console.
+- Invalidate the editor display after :version so it redraws on return.
+- Document Ctrl+C console selection when running VI on Minerva without the
+  Pointer Environment. Automatic input selection remains unresolved.
+
 ## 0.2.1 — 2026-11-17
 
 - Lead :version with Steve Jennen's name and retain ELVIS and QDOS port credits.

@@ -1099,6 +1099,7 @@ void cmd_version(frommark, tomark, cmd, bang, extra)
 {
 	msg("%s", VERSION);
 	msg("%s", QLVI_CREDIT);
+	msg("%s", QLVI_QDOS_CREDIT);
 #ifdef CREDIT
 	msg("%s", CREDIT);
 #endif
@@ -1111,6 +1112,8 @@ void cmd_version(frommark, tomark, cmd, bang, extra)
 #ifdef COPYING
 	msg("%s", COPYING);
 #endif
+	/* Version messages can scroll the command area. Repaint on return. */
+	redraw(MARK_UNSET, FALSE);
 }
 
 

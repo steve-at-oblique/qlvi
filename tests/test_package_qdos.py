@@ -27,7 +27,8 @@ class PackageTests(unittest.TestCase):
         self.assertEqual((ROOT / 'build/dist/VERSION').read_text().strip(), version)
         self.assertTrue(('QLVI by Steve Jennen, version ' + version).encode() in raw,
                         'packaged editor must contain the current version banner')
-        self.assertTrue(b'Based on ELVIS 1.6 by Steve Kirkendall; original QDOS port by Dave Walker' in raw,
+        self.assertTrue(b'Based on ELVIS 1.6 by Steve Kirkendall' in raw and
+                        b'Original QDOS port by Dave Walker' in raw,
                         'packaged editor must retain upstream credits')
 
     def test_rejects_data_files_and_double_wrapping(self):
