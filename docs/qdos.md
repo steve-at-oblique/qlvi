@@ -44,6 +44,7 @@ After a fresh boot:
 
 ```basic
 LRESPR snl4_vi_rext
+VI_USE "snl4_elvis"
 VI snl4_error_txt
 ```
 
@@ -62,8 +63,11 @@ It starts an independent job at priority 32, using the executable's header
 for code size and dataspace. It passes the filename on the standard QDOS EX
 startup stack and closes the program channel before activation. Failed
 loads remove the inactive job and release the per-call heap workspace.
-The executable location is `snl4_elvis`, specified at the end of `src/qdos/vi_rext.s`;
-change the length-prefixed string there and rebuild to use a different path.
+The executable location defaults to `win1_elvis`. Set it once per boot with
+`VI_USE "win1_vi"` (or another full executable filename). No rebuild is needed.
+VI_USE requires one non-empty string expression, up to 255 bytes. It keeps
+the setting until reset; load the extension once and configure it in your boot
+program. Reloading an already resident extension is not needed to change paths.
 Filename input is limited to 255 bytes. Existing ELVIS argument-list handling
 still limits filenames containing spaces.
 

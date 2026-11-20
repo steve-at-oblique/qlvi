@@ -26,6 +26,7 @@ library, on PATH. Packages are written to `build/dist/`. Copy `elvis` and
 
 ```basic
 LRESPR snl4_vi_rext
+VI_USE "snl4_elvis"
 DATA_USE snl4_
 VI error_txt
 ```

@@ -10,11 +10,48 @@ vi_init:
         move.w 0x110,a2
         jmp (a2)
 vi_table:
-        .data2 1
+        .data2 2
 vi_slot:
         .data2 vi_command-vi_slot
         .data1 2,0x56,0x49,0
+vi_use_slot:
+        .data2 vi_use-vi_use_slot
+        .data1 6
+        .ascii "VI_USE"
+        .data1 0
         .data2 0,0,0
+; VI_USE takes a string expression containing the full executable filename.
+vi_use:
+        move.l a5,d0
+        sub.l a3,d0
+        cmp.l #8,d0
+        bne vi_bad
+        move.w 0x116,a2
+        jsr (a2)
+        tst.l d0
+        bne vi_use_return
+        moveq #0,d1
+        move.w 0(a6,a1.l),d1
+        addq.l #2,a1
+        move.l a1,d0
+        add.l d1,d0
+        addq.l #1,d0
+        and.l #-2,d0
+        move.l d0,0x58(a6)
+        tst.w d1
+        beq vi_bad
+        cmp.w #255,d1
+        bhi vi_bad
+        lea vi_program(pc),a0
+        move.w d1,(a0)+
+        subq.w #1,d1
+vi_use_copy:
+        move.b 0(a6,a1.l),(a0)+
+        addq.l #1,a1
+        dbra d1,vi_use_copy
+        moveq #0,d0
+vi_use_return:
+        rts
 vi_command:
         move.l a5,d7
         sub.l a3,d7
@@ -203,5 +240,6 @@ vi_bad:
         rts
 vi_program:
         .data2 10
-        .ascii "snl4_elvis"
+        .ascii "win1_elvis"
+        .space 245
         .align 2

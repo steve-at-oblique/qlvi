@@ -1,12 +1,16 @@
 # QLVI ready-built files
 
 Copy `elvis` and `vi_rext` to the host directory served as SNL drive 4.
-Keep these filenames: the resident VI command opens `snl4_elvis`.
+Use `VI_USE` to set the full executable filename after loading the extension.
+The default is `win1_elvis`; no personal SNL drive is built into the launcher.
+For example: `LRESPR vi_rext : VI_USE "win1_vi"` (with the editor saved as
+`win1_vi`). The setting lasts until reset; put it in your boot program.
 
 On the QL, load the command once per boot:
 
 ```basic
 LRESPR snl4_vi_rext
+VI_USE "snl4_elvis"
 DATA_USE snl4_
 VI error_txt
 ```

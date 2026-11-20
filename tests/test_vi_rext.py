@@ -20,7 +20,7 @@ A = [UC_M68K_REG_A0, UC_M68K_REG_A1, UC_M68K_REG_A2, UC_M68K_REG_A3,
 class Machine:
     BASE, BASIC, WORK, JOB, STACK, STOP, VECTOR = 0x10000, 0x20000, 0x40000, 0x50000, 0x28000, 0xf000, 0x1200
 
-    def __init__(self, argument=None, string=False, fail=None, relocate=False, count=None):
+    def __init__(self, argument=None, string=False, fail=None, relocate=False, count=None, use=False):
         self.cpu = Uc(UC_ARCH_M68K, UC_MODE_BIG_ENDIAN)
         self.cpu.ctl_set_cpu_model(UC_CPU_M68K_M68000)
         self.cpu.mem_map(0, 0x100000)
@@ -39,7 +39,7 @@ class Machine:
         self.cpu.reg_write(A[6], self.BASIC)
         self.cpu.hook_add(UC_HOOK_CODE, self.hook)
         self.cpu.emu_start(self.BASE, self.STOP, count=1000)
-        self.entry = self.entry_point
+        self.entry = self.use_entry if use else self.entry_point
         self.cpu.reg_write(A[7], self.STACK)
         self.put(self.STACK, self.STOP)
         self.cpu.reg_write(A[3], 0x100)
@@ -81,10 +81,14 @@ class Machine:
         self.minimum_sp = min(self.minimum_sp, self.reg(A[7]))
         if pc == self.VECTOR:
             table = self.reg(A[1])
-            assert self.get(table, 2) == 1
+            assert self.get(table, 2) == 2
             assert bytes(cpu.mem_read(table + 4, 3)) == b'\x02VI'
             delta = self.get(table + 2, 2)
             self.entry_point = table + 2 + (delta if delta < 32768 else delta - 65536)
+            slot = table + 8
+            assert bytes(cpu.mem_read(slot + 2, 7)) == b'\x06VI_USE'
+            delta = self.get(slot, 2)
+            self.use_entry = slot + (delta if delta < 32768 else delta - 65536)
             self.return_from_vector()
             return
         if pc == self.VECTOR + 16:
@@ -114,7 +118,7 @@ class Machine:
                 cpu.reg_write(A[0], self.WORK)
             elif (trap, key) == (2, 1):
                 ptr = self.reg(A[0])
-                assert bytes(cpu.mem_read(ptr + 2, self.get(ptr, 2))) == b'snl4_elvis'
+                assert bytes(cpu.mem_read(ptr + 2, self.get(ptr, 2))) == getattr(self, 'expected_program', b'win1_elvis')
                 self.opened = True
                 cpu.reg_write(A[0], 0x10001)
             elif (trap, key) == (3, 0x47):
@@ -169,6 +173,27 @@ class LauncherTests(unittest.TestCase):
                 self.assertFalse(machine.opened)
                 self.assertEqual(machine.command, b'"' + argument + b'"' if argument else b'')
                 self.assertLessEqual(machine.STACK - machine.minimum_sp, 128)
+
+    def test_configured_program(self):
+        for program in [b'win1_vi', b'snl1_tools_elvis', b'x' * 255]:
+            with self.subTest(program=program):
+                machine = Machine(program, string=True, relocate=True, use=True)
+                self.assertEqual(machine.result, 0)
+                self.assertFalse(machine.activated)
+                machine.expected_program = program
+                machine.cpu.reg_write(A[7], machine.STACK)
+                machine.put(machine.STACK, machine.STOP)
+                machine.cpu.reg_write(A[3], 0x100)
+                machine.cpu.reg_write(A[5], 0x100)
+                machine.cpu.emu_start(machine.entry_point, machine.STOP, count=30000)
+                self.assertEqual(machine.reg(D[0]), 0)
+                self.assertTrue(machine.activated)
+
+    def test_use_invalid_parameters(self):
+        for argument, count in [(None, 0), (b'', 1), (b'a', 2)]:
+            machine = Machine(argument, string=True, count=count, use=True)
+            self.assertEqual(machine.result, -15)
+            self.assertFalse(machine.activated)
 
     def test_failure_cleanup(self):
         for phase in ['allocate', 'open', 'header', 'create', 'load', 'activate']:

@@ -2,6 +2,14 @@
 
 qlvi versions track this QDOS port independently of upstream ELVIS 1.6.
 
+## 1.0.0 — 2026-11-19
+
+- Add VI_USE to configure the full editor executable filename, matching QLLS's
+  LS_USE interface. Default to win1_elvis instead of a personal SNL drive.
+- Include rebuilt binaries and updated installation examples.
+- Host tests and all five Unicorn launcher tests pass. The user reports a
+  successful hardware test of the new VI_USE launcher.
+
 ## 0.2.4 — 2026-11-17
 
 - Add the Minerva Ctrl+C console-selection step to the main installation
